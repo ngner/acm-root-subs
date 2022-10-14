@@ -7,6 +7,8 @@ bases:
 - ./preprod
 - ./production
 - ./dev
+- ./sandpit
 
 resources:
 - cluster-role-binding.yaml
+- cluster-role-edit.yaml

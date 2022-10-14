@@ -1,7 +1,15 @@
-apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: ManagedClusterSetBinding
 metadata:
-  name: nzp-app-clusters-dev
+  name: dev-application
   namespace: dev-acm-sub
 spec:
-  clusterSet: nzp-app-clusters-dev
+  clusterSet: dev-application
+apiVersion: cluster.open-cluster-management.io/v1beta1
+---
+kind: ManagedClusterSetBinding
+metadata:
+  name: dev-infrastructure
+  namespace: dev-acm-sub
+spec:
+  clusterSet: dev-infrastructure
+---
