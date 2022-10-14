@@ -1,0 +1,11 @@
+
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: rhacm-infrastructure
+  namespace: acm-channels
+spec:
+  secretRef:
+  pathname: https://github.com/ngner/acm-root-subs.git
+  type: Git
+  
