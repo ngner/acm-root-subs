@@ -1,0 +1,45 @@
+#
+# Allow the ServiceAccount sufficient permissions to
+# make changes to CRs in the sandpit-local-acm-subscription namespace.
+#
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'sandpit-subscription-owner:edit'
+  namespace: sandpit-local-acm-subscription
+subjects:
+  - kind: ServiceAccount
+    name: sandpit-subscription-owner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'sandpit-subscription-owner:local-acm-subscription-role'
+  namespace: sandpit-local-acm-subscription
+subjects:
+  - kind: ServiceAccount
+    name: sandpit-subscription-owner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: local-acm-subscription-role
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: local-acm-subscription-role
+rules:
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - placements
+  - placements/status
+  - placementdecisions
+  - placementdecisions/status
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
