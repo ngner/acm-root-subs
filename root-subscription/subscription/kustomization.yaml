@@ -1,0 +1,5 @@
+
+resources:
+- subscription.yaml
+- application.yaml
+#- managedclustersetbindings.yaml

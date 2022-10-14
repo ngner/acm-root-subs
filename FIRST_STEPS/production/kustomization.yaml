@@ -1,0 +1,5 @@
+namespace: production-acm-sub
+resources:
+- namespace.yaml
+- role-binding.yaml
+- service-account.yaml

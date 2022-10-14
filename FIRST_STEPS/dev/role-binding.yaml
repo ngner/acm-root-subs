@@ -1,0 +1,45 @@
+#
+# Allow the ServiceAccount sufficient permissions to
+# make changes to CRs in the dev-acm-sub namespace.
+#
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'dev-subscription-owner:edit'
+  namespace: dev-acm-sub
+subjects:
+  - kind: ServiceAccount
+    name: dev-subscription-owner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'dev-subscription-owner:acm-sub-role'
+  namespace: dev-acm-sub
+subjects:
+  - kind: ServiceAccount
+    name: dev-subscription-owner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: acm-sub-role
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: acm-sub-role
+rules:
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - placements
+  - placements/status
+  - placementdecisions
+  - placementdecisions/status
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]

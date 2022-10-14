@@ -1,0 +1,37 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: acm-sub
+  labels:
+    app: acm-sub
+  annotations:
+    apps.open-cluster-management.io/git-path: managed-subscription
+    apps.open-cluster-management.io/git-branch: production
+    apps.open-cluster-management.io/reconcile-option: replace
+spec:
+  channel: acm-channels/rhacm-infrastructure
+  placement:
+    placementRef:
+      kind: Placement
+      name: local-cluster
+---
+
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: local-cluster
+spec:
+  #numberOfClusters: 1
+  #clusterSets:
+  #  - dev-infrastructure
+  predicates:
+    - requiredClusterSelector:
+        labelSelector:
+          matchLabels:
+            name: local-cluster
+        # claimSelector:
+        #   matchExpressions:
+        #     - key: platform.open-cluster-management.io
+        #       operator: In
+        #       values:
+        #         - aws

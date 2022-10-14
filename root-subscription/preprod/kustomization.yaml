@@ -1,0 +1,39 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+namespace: preprod-acm-sub
+
+
+bases:
+- ../subscription
+
+namePrefix: preprod-
+
+commonLabels:
+  app: preprod-acm-sub
+
+patches:
+- patch: |-
+    - op: replace
+      path: /metadata/annotations/apps.open-cluster-management.io~1git-path
+      value: "managed-subscription/preprod"
+    - op: replace
+      path: /metadata/annotations/apps.open-cluster-management.io~1git-branch
+      value: preprod
+  target:
+    group: "apps.open-cluster-management.io"
+    kind: Subscription
+    name: acm-sub
+- patch: |-
+    - op: replace
+      path: /spec/selector/matchLabels/app
+      value: preprod-acm-sub
+  target:
+    group: "app.k8s.io"
+    kind: Application
+    name: acm-sub
+
+configurations:
+  - nameReference.yaml

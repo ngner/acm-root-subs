@@ -1,0 +1,11 @@
+nameReference:
+  - kind: Placement
+    fieldSpecs:
+      - kind: Subscription
+        path: spec/placement/placementRef/name
+      - kind: PlacementBinding
+        path: placementRef/name
+  - kind: Policy
+    fieldSpecs:
+      - kind: PlacementBinding
+        path: subjects/name
